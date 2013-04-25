@@ -1,0 +1,1 @@
+SELECT t1."Tier" as "Tier 1", t2."Tier" as "Tier 2", t3."Tier" as "Tier 3" from ex1_tiere t1, ex1_tiere t2, ex1_tiere t3 WHERE t1."Lebensraum" = t2."Lebensraum" AND (NOT t1."Ernaehrung" = t3."Ernaehrung") AND t2."Familie" = t3."Familie" ORDER BY "Tier 1", "Tier 2", "Tier 3"
