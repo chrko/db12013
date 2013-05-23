@@ -1,0 +1,1 @@
+SELECT * FROM (SELECT country.name, COUNT(concert.*) as concert_count FROM country, concert WHERE country.id = concert.country GROUP BY country.name) AS concerts WHERE  concert_count >= 5000 ORDER BY name
