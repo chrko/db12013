@@ -1,0 +1,11 @@
+      name      | concert_count 
+----------------+---------------
+ Australia      |          5554
+ Canada         |          8299
+ France         |          5680
+ Germany        |         14381
+ Japan          |          5614
+ United Kingdom |         22819
+ United States  |         87756
+(7 rows)
+

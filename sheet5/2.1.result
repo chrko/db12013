@@ -1,0 +1,29 @@
+        name        | bandcount 
+--------------------+-----------
+ Australia          |      1401
+ Austria            |       365
+ Belgium            |       577
+ Brazil             |       440
+ Canada             |      1531
+ Denmark            |       455
+ Estonia            |       783
+ Finland            |      1652
+ France             |      2849
+ Germany            |      3717
+ Greece             |       473
+ Italy              |      1855
+ Japan              |      1848
+ Latvia             |       428
+ Netherlands        |      1253
+ New Zealand        |       690
+ Norway             |       638
+ Poland             |       903
+ Russian Federation |       732
+ Spain              |      1567
+ Sweden             |      1827
+ Switzerland        |       369
+ Turkey             |       122
+ United Kingdom     |      7932
+ United States      |     12876
+(25 rows)
+

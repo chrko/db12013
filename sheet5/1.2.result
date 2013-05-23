@@ -1,0 +1,7 @@
+  id   |      name       | begin_year | end_year |  type  | origin | gender 
+-------+-----------------+------------+----------+--------+--------+--------
+ 23772 | Funkmaster Flex |       1968 |          | Person |    222 | M
+ 33616 | Raekwon         |       1970 |          | Person |    222 | M
+  2504 | Wu‐Tang Clan    |       1990 |          | Group  |    222 | 
+(3 rows)
+
