@@ -1,0 +1,49 @@
+SELECT c.name, COUNT(a.id) AS bandCount
+FROM country AS c, artist AS a
+WHERE c.id = a.origin
+    AND type = 'Group'
+GROUP BY c.name
+ORDER BY c.name
+        name        | bandcount 
+--------------------+-----------
+ Australia          |      1401
+ Austria            |       365
+ ...                |       ...
+ Turkey             |       122
+ United Kingdom     |      7932
+ United States      |     12876
+(25 rows)
+
+SELECT a1.name,
+    COUNT(ar1.artist0) AS member_count
+FROM artist AS a1,
+    artist_relation AS ar1
+WHERE a1.type = 'Group'
+    AND a1.id = ar1.artist1
+    AND ar1.type = 'member of band'
+GROUP BY a1.name
+HAVING COUNT(ar1.artist0) > 50
+      name      | member_count 
+----------------+--------------
+ Hello! Project |           75
+ Enfoirés, Les  |          274
+(2 rows)
+
+SELECT country.name,
+    COUNT(concert.*) AS concert_count
+FROM country, concert
+WHERE country.id = concert.country
+GROUP BY country.name
+HAVING COUNT(concert.*) >= 5000
+ORDER BY country.name
+      name      | concert_count 
+----------------+---------------
+ Australia      |          5554
+ Canada         |          8299
+ France         |          5680
+ Germany        |         14381
+ Japan          |          5614
+ United Kingdom |         22819
+ United States  |         87756
+(7 rows)
+

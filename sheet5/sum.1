@@ -1,0 +1,204 @@
+Aufgabe 1
+=========
+
+1)
+SELECT con.name, con.eventdate
+FROM concert AS con, country
+WHERE con.country = country.id
+    AND country.name = 'Morocco'
+ORDER BY con.eventdate ASC
+             name              | eventdate  
+-------------------------------+------------
+ Universal Tone                | 2010-05-28
+ Symphonicity Tour             | 2010-05-29
+ 2011 Roger Hodgson World Tour | 2011-05-22
+ Final Sting World Tour        | 2012-05-24
+ Black And White America       | 2012-05-25
+(5 rows)
+
+
+2)
+SELECT DISTINCT artist.*
+FROM artist
+WHERE artist.id IN (
+    SELECT DISTINCT artist_credit.artist
+    FROM artist_credit
+    WHERE artist_credit.tracklist IN (
+        SELECT DISTINCT release.tracklist
+        FROM release
+        WHERE release.label = 'Loud Records'
+            AND release.format = 'Vinyl'
+    )
+)
+  id   |      name       | begin_year | end_year |  type  | origin | gender 
+-------+-----------------+------------+----------+--------+--------+--------
+ 23772 | Funkmaster Flex |       1968 |          | Person |    222 | M
+ 33616 | Raekwon         |       1970 |          | Person |    222 | M
+  2504 | Wu‐Tang Clan    |       1990 |          | Group  |    222 | 
+(3 rows)
+
+
+3)
+SELECT a3.name
+FROM artist AS a3
+WHERE a3.id IN (
+    SELECT ar1.artist1
+    FROM artist_relation AS ar1
+    WHERE ar1.type = 'sibling'
+        AND ar1.artist0 IN (
+            SELECT a1.id
+            FROM artist AS a1
+            WHERE a1.name = 'Jackson, Michael'
+        )
+    UNION
+    SELECT ar1.artist0
+    FROM artist_relation AS ar1
+    WHERE ar1.type = 'sibling'
+        AND ar1.artist1 IN (
+            SELECT a2.id
+            FROM artist AS a2
+            WHERE a2.name = 'Jackson, Michael'
+        )
+)
+ORDER BY a3.name ASC
+       name        
+-------------------
+ Jackson, Jackie
+ Jackson, Janet
+ Jackson, Jermaine
+ Jackson, LaToya
+ Jackson, Marlon
+ Jackson, Randy
+ Jackson, Rebbie
+ Jackson, Tito
+(8 rows)
+
+
+4)
+WITH BluRays(year)
+AS (
+    SELECT r1.year
+    FROM release AS r1
+    WHERE r1.format = 'Blu-ray'
+)
+SELECT *
+FROM BluRays
+WHERE BluRays.year <= all (SELECT * FROM BluRays)
+ year 
+------
+ 2009
+(1 row)
+
+
+5)
+(
+    SELECT DISTINCT s1.name
+    FROM songs AS s1
+    WHERE s1.setlist IN (
+        SELECT DISTINCT c1.setlist
+        FROM concert AS c1
+        WHERE c1.artist = (
+            SELECT a1.id
+            FROM artist AS a1
+            WHERE a1.name = 'AC/DC'
+        )
+    )
+    EXCEPT
+    SELECT DISTINCT t1.name
+    FROM track AS t1,
+        artist_credit AS ac1,
+        release AS r1
+    WHERE ac1.artist = (
+            SELECT a1.id
+            FROM artist AS a1
+            WHERE a1.name = 'AC/DC'
+	)
+        AND ac1.tracklist = t1.tracklist
+        AND ac1.pos = t1.pos
+        AND t1.tracklist = r1.tracklist
+)
+ORDER BY name
+           name            
+---------------------------
+ Bonny
+ Heartbreak Hotel
+ Honky Tonk Women
+ INTRO- Beavis and Buthead
+ Jailhouse Rock
+ Jumpin' Jack Flash
+ Lucille
+ Messin' With the Kid
+ That's All Right
+ Tutti Frutti
+(10 rows)
+
+
+6)
+SELECT a1.name AS kuenstler,
+    r1.name AS album,
+    r1.year AS PubJahr
+FROM track AS t1,
+    artist AS a1,
+    artist_credit AS ac1,
+    release AS r1
+WHERE t1.name LIKE '%mal wieder richtig Sommer%'
+    AND a1.id = ac1.artist
+    AND ac1.tracklist = t1.tracklist
+    AND ac1.pos = t1.pos
+    AND t1.tracklist = r1.tracklist
+ORDER BY PubJahr DESC
+      kuenstler      |                  album                   | pubjahr 
+---------------------+------------------------------------------+---------
+ Creme 21            | Ulli Wengers One Hit Wonder, Volume 11   |    2009
+ Creme 21            | Die Hit-Giganten: Rock aus Deutschland   |    2008
+ Lollipops, Die      | Hitzefrei                                |    2001
+ Kuhn, Dieter Thomas | Leidenschaft, Lust und Liebe             |    1999
+ Creme 21            | Fetenhits: Die Deutsche 2                |    1999
+ Creme 21            | Ballermann Hits, Folge 3                 |    1997
+ Creme 21            | Wann wird's mal wieder richtig Sommer    |    1996
+ Creme 21            | Quote 97: Niemals einer Meinung          |    1996
+ Creme 21            | Creme 21: 30% mehr                       |    1996
+ Creme 21            | Fujifilm Unlimited Vision Hits, Volume 1 |    1995
+ Kuhn, Dieter Thomas | Mein Leben für die Musik                 |    1995
+(11 rows)
+
+
+7)
+SELECT DISTINCT b.name
+FROM artist AS b,
+    artist_relation AS br0,
+    artist_relation AS br1, 
+    artist_relation AS br2,
+    (
+        SELECT DISTINCT ar0.artist0 AS artist0,
+            ar0.artist1 AS artist1,
+            ar1.artist1 AS artist2
+        FROM artist_relation AS ar0, artist_relation AS ar1
+        WHERE ar0.type = 'sibling'
+            AND ar1.type = 'sibling'
+            AND ar0.artist1 = ar1.artist0
+            AND ar1.artist1 != ar0.artist0
+    ) AS s1
+WHERE br0.type = 'member of band'
+    AND br1.type = 'member of band'
+    AND br2.type = 'member of band'
+    AND br0.artist1 = br1.artist1
+    AND br1.artist1 = br2.artist1
+    AND br0.artist1 = b.id
+    AND br0.artist0 = s1.artist0
+    AND br1.artist0 = s1.artist1
+    AND br2.artist0 = s1.artist2
+ORDER BY b.name
+      name       
+-----------------
+ Ace of Base
+ Beach Boys, The
+ Chevelle
+ Devo
+ Eisley
+ Jackson 5, The
+ Jacksons, The
+ Osmonds, The
+ Toto
+(9 rows)
+

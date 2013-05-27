@@ -1,0 +1,27 @@
+Aufgabe 3
+=========
+
+1)
+SELECT DISTINCT r1.name
+FROM release AS r1
+WHERE lower(r1.name) LIKE '%best of%'
+
+SELECT COUNT(DISTINCT r1.name) FROM release AS r1
+WHERE lower(r1.name) LIKE '%best of%';
+ count
+-------
+  2703
+(1 row)
+
+
+2)
+SELECT MAX(tnl) - MIN(tnl) AS differenz
+FROM (
+        SELECT LENGTH(t1.name) AS tnl
+        FROM track AS t1
+    ) AS tnl_table
+ differenz 
+-----------
+       287
+(1 row)
+
