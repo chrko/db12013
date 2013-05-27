@@ -1,3 +1,7 @@
+Aufgabe 2
+=========
+
+1)
 SELECT c.name, COUNT(a.id) AS bandCount
 FROM country AS c, artist AS a
 WHERE c.id = a.origin
@@ -14,6 +18,8 @@ ORDER BY c.name
  United States      |     12876
 (25 rows)
 
+
+2)
 SELECT a1.name,
     COUNT(ar1.artist0) AS member_count
 FROM artist AS a1,
@@ -29,6 +35,8 @@ HAVING COUNT(ar1.artist0) > 50
  Enfoirés, Les  |          274
 (2 rows)
 
+
+3)
 SELECT country.name,
     COUNT(concert.*) AS concert_count
 FROM country, concert
