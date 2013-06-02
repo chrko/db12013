@@ -1,4 +1,4 @@
-SELECT a1.name
+SELECT DISTINCT a1.name
 FROM artist AS a1
 WHERE a1.gender = 'F'
     AND not exists (
