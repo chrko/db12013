@@ -1,0 +1,14 @@
+                loc                |     city      | count 
+-----------------------------------+---------------+-------
+ Madison Square Garden             | New York      |   783
+ Shoreline Amphitheatre            | Mountain View |   466
+ 9:30 Club                         | Washington    |   415
+ PNC Bank Arts Center              | Holmdel       |   392
+ Merriweather Post Pavilion        | Columbia      |   387
+ Nassau Veterans Memorial Coliseum | Uniondale     |   362
+ DTE Energy Music Theatre          | Clarkston     |   334
+ The Palace of Auburn Hills        | Auburn Hills  |   333
+ The Warfield                      | San Francisco |   329
+ The Spectrum                      | Philadelphia  |   324
+(10 rows)
+
