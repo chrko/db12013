@@ -1,9 +1,9 @@
 WITH concou(loc, count) AS
-    (SELECT "loc", count(*) AS "count"
-    FROM "concert"
+    (SELECT loc, count(*) AS count
+    FROM concert
     WHERE loc IS NOT NULL
-    GROUP BY "loc"),
-    mostcons(loc, eventdate) AS
+    GROUP BY loc),
+mostcons(loc, eventdate) AS
     (SELECT concou.loc, eventdate
     FROM concou, concert
     WHERE count >= ALL (SELECT count FROM concou))
